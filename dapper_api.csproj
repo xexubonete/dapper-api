@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <Folder Include="Services\Commands\" />
   </ItemGroup>
 
 </Project>
