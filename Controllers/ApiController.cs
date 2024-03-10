@@ -11,6 +11,6 @@ namespace dapper_api.Controllers
     {
         private IMediator? _mediator;
 
-        protected IMediator? mediator => _mediator;
+        protected IMediator? Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
     }
 }
