@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using dapper_api.Entities;
+using dapper_api.Services.Queries;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,9 +10,11 @@ namespace dapper_api.Controllers
     {
         // GET: api/<ClientController>
         [HttpGet]
-        public IEnumerable<string> GetAllClients()
+        [Produces("application/json")]
+        public async Task<ActionResult<IEnumerable<Client>>> GetAllClients()
         {
-            return new string[] { "value1", "value2" };
+            var result = await Mediator.Send(new GetAllClientsQuery());
+            return Ok(result);
         }
 
         // GET api/<ClientController>/5
