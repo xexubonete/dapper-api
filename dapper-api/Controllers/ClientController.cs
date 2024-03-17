@@ -1,4 +1,5 @@
 ﻿using dapper_api.Entities;
+using dapper_api.Services.Commands;
 using dapper_api.Services.Queries;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,8 +27,9 @@ namespace dapper_api.Controllers
 
         // POST api/<ClientController>
         [HttpPost]
-        public void CreateClient([FromBody] string value)
+        public async Task<ActionResult<Client>> CreateClient([FromBody] Client client)
         {
+            return Ok(await Mediator.Send(new CreateClientCommand(client)));
         }
 
         // PUT api/<ClientController>/5
