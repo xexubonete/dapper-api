@@ -13,15 +13,15 @@ namespace dapper_api.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<Client>>> GetAllClients()
         {
-            var result = await Mediator.Send(new GetAllClientsQuery());
-            return Ok(result);
+            return Ok(await Mediator.Send(new GetAllClientsQuery()));
         }
 
         // GET api/<ClientController>/5
         [HttpGet("{id}")]
-        public string GetClientById(int id)
+        [Produces("application/json")]
+        public async Task<ActionResult<Client>> GetClientById(int id)
         {
-            return "value";
+            return Ok(await Mediator.Send(new GetClientByIdQuery(id)));
         }
 
         // POST api/<ClientController>
