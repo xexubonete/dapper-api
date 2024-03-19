@@ -41,8 +41,9 @@ namespace dapper_api.Controllers
 
         // DELETE api/<ClientController>/5
         [HttpDelete("{id}")]
-        public void DeleteClientById(int id)
+        public async Task<ActionResult<Client>> DeleteClientById(int id)
         {
+            return Ok(await Mediator.Send(new DeleteClientByIdCommand(id)));
         }
     }
 }
