@@ -34,8 +34,9 @@ namespace dapper_api.Controllers
 
         // PUT api/<ClientController>/5
         [HttpPut("{id}")]
-        public void UpdateClientById(int id, [FromBody] string value)
+        public async Task<ActionResult<Client>> UpdateClientById([FromBody]Client client)
         {
+            return Ok(await Mediator.Send(new UpdateClientByIdCommand(client)));
         }
 
         // DELETE api/<ClientController>/5
