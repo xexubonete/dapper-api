@@ -12,7 +12,7 @@ namespace dapper_api.Services.Commands
         public int? Id;
         public string? Name;
         public string? Surname;
-        public CreateClientCommand(Client? client)
+        public CreateClientCommand(Client client)
         {
             Id = client.Id;
             Name = client.Name;
@@ -30,10 +30,10 @@ namespace dapper_api.Services.Commands
             public async Task<Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
             {
                 var connection = _context.CreateConnection();
-                string query = $"INSERT INTO [dbo].[Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
-                var result = await connection.QueryAsync(query);
-
-                return result.FirstOrDefault();
+                string command = $"INSERT INTO [dbo].[Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
+                var result = (await connection.QueryAsync(command)).First();
+                
+                return result;
             }
         }
     }
