@@ -28,10 +28,10 @@ namespace dapper_api.Services.Queries
             {
                 var connection = _context.CreateConnection();
 
-                string query = $"SELECT * FROM CLIENT WHERE ID = \'{request.Id}\' ";
-                var result = await connection.QueryAsync<Client>(query);
+                string query = $"SELECT * FROM [dbo].[Client] WHERE [Id] = \'{request.Id}\' ";
+                var result = (await connection.QueryAsync<Client>(query)).First();
 
-                return result.FirstOrDefault();
+                return result;
             }        
         }
     }
