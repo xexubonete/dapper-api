@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dapper_api_test.Services.Commands
 {
-    internal class CreateClientCommandTest
+    internal class CreateClientCommandTests
     {
     }
 }

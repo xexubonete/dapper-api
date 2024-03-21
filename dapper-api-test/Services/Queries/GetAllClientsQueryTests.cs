@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace dapper_api_test.Services.Queries
 {
-    internal class GetAllClientsQueryTest
+    public class GetAllClientsQueryTest
     {
+        public GetAllClientsQueryTest()
+        {
+        }
     }
 }
