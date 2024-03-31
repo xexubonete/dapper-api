@@ -9,11 +9,11 @@ namespace dapper_api_test.Services.Queries
         private GetClientByIdQuery getClientByIdQuery;
         private Mock<IApiDbContext> _context;
         private InMemoryDatabase db;
+        int id = 1;
 
         public GetClientByIdQueryTests()
         {
             db = new InMemoryDatabase();
-            int id = 1;
             getClientByIdQuery = new GetClientByIdQuery(id);
             _context = new Mock<IApiDbContext>();
             db.CreateDatabaseTest(db);
@@ -26,7 +26,7 @@ namespace dapper_api_test.Services.Queries
             var request = new GetClientByIdQuery.GetClientByIdQueryHandler(_context.Object);
             var result = await request.Handle(getClientByIdQuery, CancellationToken.None);
 
-            Assert.That(result != null);
+            Assert.That(result != null && id == result.Id);
         }
     }
 }

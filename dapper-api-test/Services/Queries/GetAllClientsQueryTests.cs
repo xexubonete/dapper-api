@@ -9,6 +9,7 @@ namespace dapper_api_test.Services.Queries
         private GetAllClientsQuery getAllClientsQuery;
         private Mock<IApiDbContext> _context;
         private InMemoryDatabase db;
+
         public GetAllClientsQueryTest()
         {
             db = new InMemoryDatabase();
@@ -24,7 +25,7 @@ namespace dapper_api_test.Services.Queries
             var request =  new GetAllClientsQuery.GetAllClientsQueryHandler(_context.Object);
             var result = await request.Handle(getAllClientsQuery, CancellationToken.None);
 
-            Assert.That(result, Is.Not.Null);
+            Assert.That(result != null);
         }
     }
 }
