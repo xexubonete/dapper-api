@@ -5,14 +5,14 @@ using Moq;
 
 namespace dapper_api_test.Services.Commands
 {
-    public class CreateClientCommandTests
+    public class UpdateClientByIdCommandTests
     {
-        private CreateClientCommand createClientCommand;
+        private UpdateClientByIdCommand updateClientByIdCommand;
         private Mock<IApiDbContext> _context;
         private InMemoryDatabase db;
         Client client = new Client();
 
-        public CreateClientCommandTests()
+        public UpdateClientByIdCommandTests()
         {
             db = new InMemoryDatabase();
             client = new Client
@@ -22,7 +22,7 @@ namespace dapper_api_test.Services.Commands
                 Surname = "Surname"
             };
 
-            createClientCommand = new CreateClientCommand(client);
+            updateClientByIdCommand = new UpdateClientByIdCommand(client);
             _context = new Mock<IApiDbContext>();
             db.CreateDatabaseTest(db);
             _context.Setup(x => x.CreateConnection()).Returns(db.OpenConnection());
@@ -31,8 +31,8 @@ namespace dapper_api_test.Services.Commands
         [Test]
         public async Task CreateClientCommand_Should_Return_Record()
         {
-            var request = new CreateClientCommand.CreateClientCommandHandler(_context.Object);
-            var result = await request.Handle(createClientCommand, CancellationToken.None);
+            var request = new UpdateClientByIdCommand.UpdateClientByIdCommandHandler(_context.Object);
+            var result = await request.Handle(updateClientByIdCommand, CancellationToken.None);
 
             Assert.That(result != null && client.Id == result.Id);
         }
