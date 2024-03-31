@@ -2,7 +2,6 @@
 using dapper_api.Entities;
 using dapper_api.Interfaces;
 using MediatR;
-using Microsoft.AspNetCore.Server.HttpSys;
 
 namespace dapper_api.Services.Queries
 {
@@ -26,12 +25,24 @@ namespace dapper_api.Services.Queries
 
             public async Task<Client> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
             {
-                var connection = _context.CreateConnection();
+                try
+                {
+                    using var connection = _context.CreateConnection();
 
-                string query = $"SELECT * FROM [Client] WHERE [Id] = \'{request.Id}\' ";
-                var result = (await connection.QueryAsync<Client>(query)).First();
+                    string query = $"SELECT * FROM [Client] WHERE [Id] = \'{request.Id}\' ";
+                    var result = (await connection.QueryAsync<Client>(query, new { request.Id })).FirstOrDefault();
 
-                return result;
+                    if (result == null)
+                    {
+                        throw new Exception($"No client with Id = {request.Id}");
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("An error ocurred while processing the request", ex);
+                }
             }        
         }
     }

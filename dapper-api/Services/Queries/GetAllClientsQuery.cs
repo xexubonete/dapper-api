@@ -17,12 +17,24 @@ namespace dapper_api.Services.Queries
 
             public async Task<IEnumerable<Client>> Handle(GetAllClientsQuery request, CancellationToken cancellationToken)
             {
-                var connection = _context.CreateConnection();
+                try
+                {
+                    using var connection = _context.CreateConnection();
 
-                string query = "SELECT * FROM [Client]";
-                IEnumerable<Client>? result = await connection.QueryAsync<Client>(query);
+                    string query = "SELECT * FROM [Client]";
+                    var result = await connection.QueryAsync<Client>(query);
 
-                return result;
+                    if (result == null)
+                    {
+                        throw new Exception("No clients");
+                    }
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("An error ocurred while processing the request", ex);
+                }
             }
         }
     }
