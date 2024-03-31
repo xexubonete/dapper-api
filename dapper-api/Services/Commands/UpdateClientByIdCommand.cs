@@ -27,18 +27,27 @@ namespace dapper_api.Services.Commands
 
             public async Task<Client> Handle(UpdateClientByIdCommand request, CancellationToken cancellationToken)
             {
-                var connection = _context.CreateConnection();
-                var client = new Client
+                try
                 {
-                    Id = request.Id,
-                    Name = request.Name,
-                    Surname = request.Surname,
-                };
-                string command = $"UPDATE [Client] SET [Name]= {request.Name}, [Surname]= {request.Surname} WHERE [Id] = {request.Id}";
+                    using var connection = _context.CreateConnection();
 
-                await connection.QueryAsync(command);
+                    var client = new Client
+                    {
+                        Id = request.Id,
+                        Name = request.Name,
+                        Surname = request.Surname,
+                    };
+                    string command = $"UPDATE [Client] SET [Name]= \'{ request.Name }\', [Surname]= \'{ request.Surname }\' WHERE [Id] = { request.Id }";
 
-                return client;
+                    await connection.ExecuteAsync(command, new { request.Id, request.Name, request.Surname });
+
+                    return client;
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("An error ocurred while processing the request", ex);
+                }
             }
         }
     }

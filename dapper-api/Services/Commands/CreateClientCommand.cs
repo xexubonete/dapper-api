@@ -29,7 +29,8 @@ namespace dapper_api.Services.Commands
             {
                 try
                 {
-                    var connection = _context.CreateConnection();
+                    using var connection = _context.CreateConnection();
+
                     var client = new Client
                     {
                         Id = request.Id,
@@ -38,14 +39,14 @@ namespace dapper_api.Services.Commands
                     };
                     string command = $"INSERT INTO [Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
 
-                    await connection.ExecuteAsync(command, new { Id = request.Id, Name = request.Name, Surname = request.Surname });
+                    await connection.ExecuteAsync(command, new { request.Id, request.Name, request.Surname });
 
                     return client;
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new Exception("An error ocurred while processing the request");
+                    throw new Exception("An error ocurred while processing the request", ex);
                 }
             }
         }
