@@ -19,7 +19,7 @@ namespace dapper_api.Services.Queries
             {
                 var connection = _context.CreateConnection();
 
-                string query = "SELECT * FROM [dbo].[Client]";
+                string query = "SELECT * FROM [Client]";
                 IEnumerable<Client>? result = await connection.QueryAsync<Client>(query);
 
                 return result;

@@ -2,12 +2,10 @@
 using dapper_api.Entities;
 using dapper_api.Interfaces;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 
 namespace dapper_api.Services.Commands
 {
-    public class CreateClientCommand : IRequest<Client>
+    public class CreateClientCommand : IRequest
     {
         public int? Id;
         public string? Name;
@@ -19,7 +17,7 @@ namespace dapper_api.Services.Commands
             Surname = client.Surname;
         }
 
-        public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Client>
+        public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand>
         {
             private readonly IApiDbContext _context;
             public CreateClientCommandHandler(IApiDbContext context)
@@ -27,13 +25,12 @@ namespace dapper_api.Services.Commands
                 _context = context;
             }
 
-            public async Task<Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+            public async Task Handle(CreateClientCommand request, CancellationToken cancellationToken)
             {
                 var connection = _context.CreateConnection();
-                string command = $"INSERT INTO [dbo].[Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
-                var result = (await connection.QueryAsync(command)).First();
-                
-                return result;
+                string command = $"INSERT INTO [Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
+
+                await connection.QueryAsync(command);
             }
         }
     }
