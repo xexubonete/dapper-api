@@ -26,10 +26,17 @@ namespace dapper_api.Services.Commands
             public async Task<Client> Handle(DeleteClientByIdCommand request, CancellationToken cancellationToken)
             {
                 var connection = _context.CreateConnection();
-                string command = $"DELETE FROM [dbo].[Client] WHERE [Id] = {request.Id}";
-                var result = (await connection.QueryAsync(command)).First();
+                var client = new Client
+                {
+                    Id = request.Id,
+                    Name = request.Name,
+                    Surname = request.Surname,
+                };
+                string command = $"DELETE FROM [Client] WHERE [Id] = {request.Id}";
+                
+                await connection.QueryAsync(command);
 
-                return result;
+                return client;
             }
         }
     }
