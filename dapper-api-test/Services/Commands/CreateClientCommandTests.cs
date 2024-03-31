@@ -31,9 +31,8 @@ namespace dapper_api_test.Services.Commands
         public async Task CreateClientCommand_Should_Return_Record()
         {
             var request = new CreateClientCommand.CreateClientCommandHandler(_context.Object);
-            await request.Handle(createClientCommand, CancellationToken.None);
+            var result = await request.Handle(createClientCommand, CancellationToken.None);
 
-            db.
             Assert.That(result != null);
         }
     }
