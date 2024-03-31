@@ -27,18 +27,26 @@ namespace dapper_api.Services.Commands
 
             public async Task<Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
             {
-                var connection = _context.CreateConnection();
-                var client = new Client
+                try
                 {
-                    Id = request.Id,
-                    Name = request.Name,
-                    Surname = request.Surname,
-                };
-                string command = $"INSERT INTO [Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
+                    var connection = _context.CreateConnection();
+                    var client = new Client
+                    {
+                        Id = request.Id,
+                        Name = request.Name,
+                        Surname = request.Surname,
+                    };
+                    string command = $"INSERT INTO [Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
 
-                await connection.QueryAsync(command);
+                    await connection.ExecuteAsync(command, new { Id = request.Id, Name = request.Name, Surname = request.Surname });
 
-                return client;
+                    return client;
+
+                }
+                catch (Exception)
+                {
+                    throw new Exception("An error ocurred while processing the request");
+                }
             }
         }
     }
