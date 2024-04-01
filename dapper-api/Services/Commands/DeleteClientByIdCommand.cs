@@ -5,7 +5,7 @@ using MediatR;
 
 namespace dapper_api.Services.Commands
 {
-    public class DeleteClientByIdCommand : IRequest<Client>
+    public class DeleteClientByIdCommand : IRequest
     {
         public int Id { get; set; }
         public string? Name { get; set; }
@@ -15,7 +15,7 @@ namespace dapper_api.Services.Commands
             Id = id;
         }
 
-        public class DeleteClientByIdCommandHandler : IRequestHandler<DeleteClientByIdCommand, Client>
+        public class DeleteClientByIdCommandHandler : IRequestHandler<DeleteClientByIdCommand>
         {
             private readonly IApiDbContext _context;
             public DeleteClientByIdCommandHandler(IApiDbContext context)
@@ -23,7 +23,7 @@ namespace dapper_api.Services.Commands
                 _context = context;
             }
 
-            public async Task<Client> Handle(DeleteClientByIdCommand request, CancellationToken cancellationToken)
+            public async Task Handle(DeleteClientByIdCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -37,10 +37,14 @@ namespace dapper_api.Services.Commands
                     };
                     string command = $"DELETE FROM [Client] WHERE [Id] = {request.Id}";
 
-                    await connection.ExecuteAsync(command, new { request.Id });
+                    var res = await connection.ExecuteAsync(command, new { request.Id });
 
-                    return client;
+                    if (res == 0)
+                    {
+                        throw new Exception($"No client with Id = {request.Id} ");
+                    }
 
+                    return;
                 }
                 catch (Exception ex)
                 {
