@@ -33,7 +33,7 @@ namespace dapper_api.Controllers
         }
 
         // PUT api/<ClientController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<ActionResult<Client>> UpdateClientById([FromBody]Client client)
         {
             return Ok(await Mediator.Send(new UpdateClientByIdCommand(client)));
@@ -41,9 +41,10 @@ namespace dapper_api.Controllers
 
         // DELETE api/<ClientController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Client>> DeleteClientById(int id)
+        public async Task<ActionResult> DeleteClientById(int id)
         {
-            return Ok(await Mediator.Send(new DeleteClientByIdCommand(id)));
+            await Mediator.Send(new DeleteClientByIdCommand(id));
+            return Ok();
         }
     }
 }
