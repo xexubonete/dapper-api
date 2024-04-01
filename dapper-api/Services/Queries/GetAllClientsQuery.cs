@@ -24,12 +24,7 @@ namespace dapper_api.Services.Queries
                     string query = "SELECT * FROM [Client]";
                     var result = await connection.QueryAsync<Client>(query);
 
-                    if (result == null)
-                    {
-                        throw new Exception("No clients");
-                    }
-
-                    return result;
+                    return result == null ? throw new Exception("No clients") : result;
                 }
                 catch (Exception ex)
                 {
