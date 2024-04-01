@@ -29,7 +29,7 @@ namespace dapper_api_test.Services.Commands
         }
 
         [Test]
-        public async Task CreateClientCommand_Should_Return_Record()
+        public async Task UpdateClientByIdCommand_Should_Return_Record()
         {
             var request = new UpdateClientByIdCommand.UpdateClientByIdCommandHandler(_context.Object);
             var result = await request.Handle(updateClientByIdCommand, CancellationToken.None);

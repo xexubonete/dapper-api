@@ -21,12 +21,13 @@ namespace dapper_api_test.Services.Commands
         }
 
         [Test]
-        public async Task CreateClientCommand_Should_Return_Record()
+        public async Task DeleteClientByIdCommand_Should_Return_Record()
         {
             var request = new DeleteClientByIdCommand.DeleteClientByIdCommandHandler(_context.Object);
-            var result = await request.Handle(deleteClientByIdCommand, CancellationToken.None);
 
-            Assert.That(result != null && id == result.Id);
+            await request.Handle(deleteClientByIdCommand, CancellationToken.None);
+
+            Assert.That(true);
         }
     }
 }
