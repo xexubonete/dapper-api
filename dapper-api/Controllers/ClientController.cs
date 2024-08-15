@@ -14,7 +14,14 @@ namespace dapper_api.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<Client>>> GetAllClients()
         {
-            return Ok(await Mediator.Send(new GetAllClientsQuery()));
+            var clients = await Mediator.Send(new GetAllClientsQuery());
+
+            if (!clients.Any())
+            {
+                return NoContent();
+            }
+
+            return Ok(clients);
         }
 
         // GET api/<ClientController>/5
@@ -22,13 +29,27 @@ namespace dapper_api.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<Client>> GetClientById(int id)
         {
-            return Ok(await Mediator.Send(new GetClientByIdQuery(id)));
+            var client = await Mediator.Send(new GetClientByIdQuery(id));
+            
+            if (client is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(client);
         }
 
         // POST api/<ClientController>
         [HttpPost]
         public async Task<ActionResult<Client>> CreateClient([FromBody] Client client)
         {
+            var existentClient = await Mediator.Send(new GetClientByIdQuery(client.Id));
+            
+            if (!(existentClient is null))
+            {
+                return BadRequest("Client already exists.");
+            }
+
             return Ok(await Mediator.Send(new CreateClientCommand(client)));
         }
 
@@ -36,6 +57,18 @@ namespace dapper_api.Controllers
         [HttpPut]
         public async Task<ActionResult<Client>> UpdateClientById([FromBody]Client client)
         {
+            Client existentClient = await Mediator.Send(new GetClientByIdQuery(client.Id));
+
+            if (existentClient is null)
+            {
+                return NotFound();
+            }
+
+            if(client.Equals(existentClient))
+            {
+                return BadRequest("Client already exists.");
+            }
+
             return Ok(await Mediator.Send(new UpdateClientByIdCommand(client)));
         }
 
@@ -43,7 +76,15 @@ namespace dapper_api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteClientById(int id)
         {
+            var existentClient = await Mediator.Send(new GetClientByIdQuery(id));
+
+            if (existentClient is null)
+            {
+                return NotFound();
+            }
+
             await Mediator.Send(new DeleteClientByIdCommand(id));
+
             return Ok();
         }
     }

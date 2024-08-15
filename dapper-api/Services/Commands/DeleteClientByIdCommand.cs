@@ -37,12 +37,7 @@ namespace dapper_api.Services.Commands
                     };
                     string command = $"DELETE FROM [Client] WHERE [Id] = {request.Id}";
 
-                    var res = await connection.ExecuteAsync(command, new { request.Id });
-
-                    if (res == 0)
-                    {
-                        throw new Exception($"No client with Id = {request.Id} ");
-                    }
+                    await connection.ExecuteAsync(command, new { request.Id });
 
                     return;
                 }
