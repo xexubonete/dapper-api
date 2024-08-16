@@ -1,5 +1,6 @@
 ﻿namespace dapper_api.Entities
 {
+    
 #pragma warning disable CS0659 // El tipo reemplaza a Object.Equals(object o), pero no reemplaza a Object.GetHashCode()
     public class Client
 #pragma warning restore CS0659 // El tipo reemplaza a Object.Equals(object o), pero no reemplaza a Object.GetHashCode()
