@@ -31,8 +31,8 @@ namespace dapper_api.Services.Queries
 
                     string query = $"SELECT * FROM [Client] WHERE [Id] = \'{request.Id}\' ";
                     var result = (await connection.QueryAsync<Client>(query, new { request.Id })).FirstOrDefault();
-
-                    return result == null ? throw new Exception($"No client with Id = {request.Id}") : result;
+                    
+                    return result;
                 }
                 catch (Exception ex)
                 {
