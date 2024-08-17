@@ -1,31 +1,33 @@
 ﻿using Dapper;
 using dapper_api.Entities;
 using dapper_api.Interfaces;
+using FluentValidation;
 using MediatR;
 
 namespace dapper_api.Services.Commands
 {
-    public class CreateClientCommand : IRequest<Client>
+    public class CreateClientCommand : IRequest
     {
         public int Id;
         public string? Name;
         public string? Surname;
         public CreateClientCommand(Client client)
         {
-            Id = client.Id;
             Name = client.Name;
             Surname = client.Surname;
         }
 
-        public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Client>
+        public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand>
         {
             private readonly IApiDbContext _context;
+            private ClientValidator validator = new ClientValidator();
+
             public CreateClientCommandHandler(IApiDbContext context)
             {
                 _context = context;
             }
 
-            public async Task<Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+            public async Task Handle(CreateClientCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -37,11 +39,12 @@ namespace dapper_api.Services.Commands
                         Name = request.Name,
                         Surname = request.Surname,
                     };
-                    string command = $"INSERT INTO [Client] ([Id], [Name], [Surname]) VALUES ({request.Id}, \'{request.Name}\', \'{request.Surname}\');";
+
+                    validator.ValidateAndThrow(client);
+
+                    string command = $"INSERT INTO [Client] ([Name], [Surname]) VALUES ( \'{client.Name}\', \'{client.Surname}\');";
 
                     await connection.ExecuteAsync(command, new { request.Id, request.Name, request.Surname });
-
-                    return client;
 
                 }
                 catch (Exception ex)
