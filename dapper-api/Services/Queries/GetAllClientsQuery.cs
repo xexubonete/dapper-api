@@ -22,9 +22,9 @@ namespace dapper_api.Services.Queries
                     using var connection = _context.CreateConnection();
 
                     string query = "SELECT * FROM [Client]";
-                    var result = await connection.QueryAsync<Client>(query);
 
-                    return result == null ? throw new Exception("No clients") : result;
+                    return await connection.QueryAsync<Client>(query);
+
                 }
                 catch (Exception ex)
                 {

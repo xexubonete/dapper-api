@@ -50,7 +50,9 @@ namespace dapper_api.Controllers
                 return BadRequest("Client already exists.");
             }
 
-            return Ok(await Mediator.Send(new CreateClientCommand(client)));
+            await Mediator.Send(new CreateClientCommand(client));
+
+            return Ok();
         }
 
         // PUT api/<ClientController>/5
@@ -69,7 +71,9 @@ namespace dapper_api.Controllers
                 return BadRequest("Client already exists.");
             }
 
-            return Ok(await Mediator.Send(new UpdateClientByIdCommand(client)));
+            await Mediator.Send(new UpdateClientByIdCommand(client));
+
+            return Ok();
         }
 
         // DELETE api/<ClientController>/5

@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using dapper_api.Entities;
 using dapper_api.Interfaces;
 using MediatR;
 
@@ -29,17 +28,10 @@ namespace dapper_api.Services.Commands
                 {
                     using var connection = _context.CreateConnection();
 
-                    var client = new Client
-                    {
-                        Id = request.Id,
-                        Name = request.Name,
-                        Surname = request.Surname,
-                    };
                     string command = $"DELETE FROM [Client] WHERE [Id] = {request.Id}";
 
                     await connection.ExecuteAsync(command, new { request.Id });
 
-                    return;
                 }
                 catch (Exception ex)
                 {
