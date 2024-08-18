@@ -1,7 +1,9 @@
-﻿using dapper_api.Entities;
+﻿using System.Data;
+using dapper_api.Entities;
 using dapper_api.Interfaces;
 using dapper_api.Services.Commands;
 using Moq;
+using ServiceStack.OrmLite.Dapper;
 
 namespace dapper_api_test.Services.Commands
 {
@@ -31,10 +33,11 @@ namespace dapper_api_test.Services.Commands
         [Test]
         public async Task CreateClientCommand_Should_Return_Record()
         {
+            var executeAsyncMoq = new Mock<IDbConnection>();
             var request = new CreateClientCommand.CreateClientCommandHandler(_context.Object);
-            var result = await request.Handle(createClientCommand, CancellationToken.None);
+            await request.Handle(createClientCommand, CancellationToken.None);
 
-            Assert.That(result != null && client.Id == result.Id);
+            executeAsyncMoq.Verify(x => x.ExecuteAsync("", null, null, null, null), Times.Once);
         }
     }
 }

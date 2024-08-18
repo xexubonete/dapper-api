@@ -1,4 +1,6 @@
-﻿using dapper_api.Entities;
+﻿using System.Data;
+using Dapper;
+using dapper_api.Entities;
 using dapper_api.Interfaces;
 using dapper_api.Services.Commands;
 using Moq;
@@ -31,10 +33,11 @@ namespace dapper_api_test.Services.Commands
         [Test]
         public async Task UpdateClientByIdCommand_Should_Return_Record()
         {
+            var executeAsyncMoq = new Mock<IDbConnection>();
             var request = new UpdateClientByIdCommand.UpdateClientByIdCommandHandler(_context.Object);
-            var result = await request.Handle(updateClientByIdCommand, CancellationToken.None);
+            await request.Handle(updateClientByIdCommand, CancellationToken.None);
 
-            Assert.That(result != null && client.Id == result.Id);
+            executeAsyncMoq.Verify(x => x.ExecuteAsync("", null, null, null, null), Times.Once);
         }
     }
 }
