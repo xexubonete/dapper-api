@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using dapper_api.Entities;
+using dapper_api.DTOs;
 using dapper_api.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -11,7 +11,7 @@ namespace dapper_api.Services.Commands
         public int Id;
         public string? Name;
         public string? Surname;
-        public CreateClientCommand(Client client)
+        public CreateClientCommand(ClientDTO client)
         {
             Name = client.Name;
             Surname = client.Surname;
@@ -20,7 +20,7 @@ namespace dapper_api.Services.Commands
         public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand>
         {
             private readonly IApiDbContext _context;
-            private ClientValidator validator = new ClientValidator();
+            private ClientDTOValidator validator = new ClientDTOValidator();
 
             public CreateClientCommandHandler(IApiDbContext context)
             {
@@ -33,9 +33,8 @@ namespace dapper_api.Services.Commands
                 {
                     using var connection = _context.CreateConnection();
 
-                    var client = new Client
+                    var client = new ClientDTO
                     {
-                        Id = request.Id,
                         Name = request.Name,
                         Surname = request.Surname,
                     };

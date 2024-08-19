@@ -1,11 +1,11 @@
 ﻿using Dapper;
-using dapper_api.Entities;
+using dapper_api.DTOs;
 using dapper_api.Interfaces;
 using MediatR;
 
 namespace dapper_api.Services.Queries
 {
-    public class GetClientByIdQuery : IRequest<Client>
+    public class GetClientByIdQuery : IRequest<ClientDTO>
     {
         public int Id;
 
@@ -14,7 +14,7 @@ namespace dapper_api.Services.Queries
             Id = id;
         }
 
-        public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, Client>
+        public class GetClientByIdQueryHandler : IRequestHandler<GetClientByIdQuery, ClientDTO>
         {
 
             private readonly IApiDbContext _context;
@@ -23,7 +23,7 @@ namespace dapper_api.Services.Queries
                 _context = context;
             }
 
-            public async Task<Client> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
+            public async Task<ClientDTO> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -32,7 +32,7 @@ namespace dapper_api.Services.Queries
                     string query = $"SELECT * FROM [Client] WHERE [Id] = \'{request.Id}\' ";
 
 #pragma warning disable CS8603 // Posible tipo de valor devuelto de referencia nulo
-                    return (await connection.QueryAsync<Client>(query, new { request.Id })).FirstOrDefault();
+                    return (await connection.QueryAsync<ClientDTO>(query, new { request.Id })).FirstOrDefault();
 #pragma warning restore CS8603 // Posible tipo de valor devuelto de referencia nulo
 
                 }

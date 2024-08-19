@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using dapper_api.Entities;
+using dapper_api.DTOs;
 using dapper_api.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -11,9 +11,8 @@ namespace dapper_api.Services.Commands
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Surname { get; set; }
-        public UpdateClientByIdCommand(Client client)
+        public UpdateClientByIdCommand(ClientDTO client)
         {
-            Id = client.Id;
             Name = client.Name;
             Surname = client.Surname;
         }
@@ -21,7 +20,7 @@ namespace dapper_api.Services.Commands
         public class UpdateClientByIdCommandHandler : IRequestHandler<UpdateClientByIdCommand>
         {
             private readonly IApiDbContext _context;
-            private readonly ClientValidator validator = new ClientValidator();
+            private readonly ClientDTOValidator validator = new ClientDTOValidator();
             public UpdateClientByIdCommandHandler(IApiDbContext context)
             {
                 _context = context;
@@ -33,9 +32,8 @@ namespace dapper_api.Services.Commands
                 {
                     using var connection = _context.CreateConnection();
 
-                    var client = new Client
+                    var client = new ClientDTO
                     {
-                        Id = request.Id,
                         Name = request.Name,
                         Surname = request.Surname,
                     };

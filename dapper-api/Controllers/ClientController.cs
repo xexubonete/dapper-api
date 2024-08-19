@@ -1,4 +1,5 @@
-﻿using dapper_api.Entities;
+﻿using dapper_api.DTOs;
+using dapper_api.Entities;
 using dapper_api.Services.Commands;
 using dapper_api.Services.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ namespace dapper_api.Controllers
 
         // POST api/<ClientController>
         [HttpPost]
-        public async Task<ActionResult<Client>> CreateClient([FromBody] Client client)
+        public async Task<ActionResult<Client>> CreateClient([FromBody] ClientDTO client)
         {
             var existentClient = await Mediator.Send(new GetClientByIdQuery(client.Id));
             
@@ -57,9 +58,9 @@ namespace dapper_api.Controllers
 
         // PUT api/<ClientController>/5
         [HttpPut]
-        public async Task<ActionResult<Client>> UpdateClientById([FromBody]Client client)
+        public async Task<ActionResult<Client>> UpdateClientById([FromBody]ClientDTO client)
         {
-            Client existentClient = await Mediator.Send(new GetClientByIdQuery(client.Id));
+            var existentClient = await Mediator.Send(new GetClientByIdQuery(client.Id));
 
             if (existentClient is null)
             {
