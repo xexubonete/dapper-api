@@ -1,16 +1,10 @@
-using System.Data;
-using dapper_api.Entities;
+using dapper_api.DTOs;
 using FluentValidation;
 
-class ClientValidator : AbstractValidator<Client>
+class ClientDTOValidator : AbstractValidator<ClientDTO>
 {
-    public ClientValidator()
+    public ClientDTOValidator()
     {
-        RuleFor(x => x.Id)
-        .NotNull()
-        .NotEqual(0)        
-        .WithMessage("{Id} must have a number other than 0");
-
         RuleFor(x => x.Name)
         .NotEmpty()
         .NotNull()
