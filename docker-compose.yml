@@ -1,5 +1,5 @@
 services:
-  mediator-api:
+  dapper-api:
     build: .
     ports:
       - "5024:8080"
@@ -15,5 +15,6 @@ services:
       - MSSQL_SA_PASSWORD=Sqlserver0001&
     volumes:
       - sqlserver-data:/var/opt/mssql/data
+      - ./dapper-api/scripts/dbo_init.sql:/tmp/dbo_init.sql
 volumes:
   sqlserver-data:

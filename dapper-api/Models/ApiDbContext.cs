@@ -6,10 +6,10 @@ namespace dapper_api.Models
 {
     public class ApiDbContext : IApiDbContext
     {
-        public IDbConnection CreateConnection() 
+        public IDbConnection CreateConnection()
         {
-            string conectionString = "Server=(LocalDb)\\MSSQLLocalDB;Database=CrudApi;TrustServerCertificate=True;Integrated Security=True;";
-            return new SqlConnection(conectionString);
+            string connectionString = "Server=sqlserver;Database=CrudApi;User Id=sa;Password=Sqlserver0001&;TrustServerCertificate=True";
+            return new SqlConnection(connectionString);
         }
     }
 }
