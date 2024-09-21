@@ -6,10 +6,16 @@ namespace dapper_api.Models
 {
     public class ApiDbContext : IApiDbContext
     {
+        private readonly string _connectionString;
+
+        public ApiDbContext(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
         public IDbConnection CreateConnection()
         {
-            string connectionString = "Server=sqlserver;Database=CrudApi;User Id=sa;Password=Sqlserver0001&;TrustServerCertificate=True";
-            return new SqlConnection(connectionString);
+            return new SqlConnection(_connectionString);
         }
     }
 }
