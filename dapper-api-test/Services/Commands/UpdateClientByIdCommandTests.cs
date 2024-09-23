@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Dapper;
+using dapper_api.DTOs;
 using dapper_api.Entities;
 using dapper_api.Interfaces;
 using dapper_api.Services.Commands;
@@ -12,14 +13,13 @@ namespace dapper_api_test.Services.Commands
         private UpdateClientByIdCommand updateClientByIdCommand;
         private Mock<IApiDbContext> _context;
         private InMemoryDatabase db;
-        Client client = new Client();
+        ClientDTO client = new ClientDTO();
 
         public UpdateClientByIdCommandTests()
         {
             db = new InMemoryDatabase();
-            client = new Client
+            client = new ClientDTO
             {
-                Id = 2,
                 Name = "Name",
                 Surname = "Surname"
             };

@@ -1,9 +1,11 @@
 ﻿using System.Data;
 using dapper_api.Entities;
+using dapper_api.DTOs;
 using dapper_api.Interfaces;
 using dapper_api.Services.Commands;
 using Moq;
 using ServiceStack.OrmLite.Dapper;
+using ServiceStack.DataAnnotations;
 
 namespace dapper_api_test.Services.Commands
 {
@@ -12,14 +14,13 @@ namespace dapper_api_test.Services.Commands
         private CreateClientCommand createClientCommand;
         private Mock<IApiDbContext> _context;
         private InMemoryDatabase db;
-        Client client = new Client();
+        ClientDTO client = new ClientDTO();
 
         public CreateClientCommandTests()
         {
             db = new InMemoryDatabase();
-            client = new Client
+            client = new ClientDTO
             {
-                Id = 2,
                 Name = "Name",
                 Surname = "Surname"
             };
