@@ -6,7 +6,10 @@ using FluentValidation;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
+// builder.Configuration
+//     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+//     .AddEnvironmentVariables();
+builder.Configuration.AddEnvironmentVariables();
 if (!builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>();

@@ -36,8 +36,12 @@ services:
     build: .
     ports:
       - "5024:8080"
+    env_file:
+      - .env
     depends_on:
       - sqlserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
   sqlcmd:
     image: mcr.microsoft.com/mssql-tools:latest
     user: root
@@ -54,6 +58,6 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=${DB_PASSWORD}
-      - ConnectionStrings__AZURE_SQL_CONNECTIONSTRING=${AZURE_SQL_CONNECTIONSTRING}
+      - ConnectionStrings__AZURE_SQL_CONNECTIONSTRING=Server=${DB_SERVER};Initial Catalog=${DB_INITIALCATALOG};Persist Security Info=False;User ID=${DB_USERID};Password=${DB_PASSWORD};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 volumes:
   sqlserver-data:

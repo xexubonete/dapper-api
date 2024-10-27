@@ -6,11 +6,13 @@ namespace dapper_api.Models
 {
     public class ApiDbContext : IApiDbContext
     {
-        private readonly string _connectionString;
+        private string _connectionString;
 
         public ApiDbContext(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+            // _connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+            // Accede directamente a la variable de entorno configurada en Docker
+            _connectionString = configuration["ConnectionStrings__AZURE_SQL_CONNECTIONSTRING"];
         }
 
         public IDbConnection CreateConnection()
