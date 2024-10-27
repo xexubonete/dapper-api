@@ -10,7 +10,7 @@ namespace dapper_api.Models
 
         public ApiDbContext(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
         }
 
         public IDbConnection CreateConnection()

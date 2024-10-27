@@ -7,6 +7,11 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -15,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddScoped<IApiDbContext, ApiDbContext>();
 builder.Services.AddScoped<IValidator<ClientDTO>, ClientDTOValidator>();
+
 
 var app = builder.Build();
 

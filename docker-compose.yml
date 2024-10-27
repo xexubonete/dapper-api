@@ -41,23 +41,19 @@ services:
   sqlcmd:
     image: mcr.microsoft.com/mssql-tools:latest
     user: root
-    command: /opt/mssql_scripts/dbo_init.sql
     stdin_open: true
-    # volumes:
-    #   - ./dapper-api/scripts/dbo_init.sql:/opt/mssql_scripts/dbo_init.sql
   sqlserver:
     image: mcr.microsoft.com/azure-sql-edge:latest
-    command: /bin/bash -c "/opt/mssql/bin/sqlservr & sleep 30 && /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Sqlserver0001&' -d master -i /tmp/dbo_init.sql"
     volumes:
       - sqlserver-data:/var/opt/mssql/data
-      - ./dapper-api/scripts/dbo_init.sql:/tmp/dbo_init.sql
     user: root
     ports:
       - "1433:1433"
+    env_file:
+      - .env
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Sqlserver0001&
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CrudApi;User Id=sa;Password=Sqlserver0001&;Encrypt=false;
-
+      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+      - ConnectionStrings__AZURE_SQL_CONNECTIONSTRING=${AZURE_SQL_CONNECTIONSTRING}
 volumes:
   sqlserver-data:

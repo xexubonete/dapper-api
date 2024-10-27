@@ -1,10 +1,3 @@
-IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'CrudApi')
-BEGIN
-    CREATE DATABASE CrudApi;
-END
-GO
-
-USE CrudApi;
 GO
 PRINT '---------------------Iniciando script dbo_init.sql---------------------'
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Client]') AND type in (N'U'))

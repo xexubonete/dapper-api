@@ -17,7 +17,7 @@ WORKDIR /dapper-api
 #     rm -rf /var/lib/apt/lists/*
 
 # Copiar el script SQL al contenedor
-COPY ./dapper-api/Scripts/dbo_init.sql /tmp/dbo_init.sql
+# COPY ./dapper-api/Scripts/dbo_init.sql /tmp/dbo_init.sql
 
 ##Exponer los puertos con los que vamos a trabajar
 EXPOSE 5024
