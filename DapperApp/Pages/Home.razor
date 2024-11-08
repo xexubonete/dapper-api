@@ -1,0 +1,68 @@
+﻿@page "/"
+@using System.Net
+@using DapperApp.DTOs
+@inject HttpClient Http
+
+
+<PageTitle>Home</PageTitle>
+
+<h1>Client</h1>
+
+<p>This component demonstrates fetching data from the server.</p> 
+
+@if (clientes == "// {\n// }")
+{
+<p><em>Loading...</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Temp. (C)</th>
+        <th>Temp. (F)</th>
+        <th>Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+    @* @foreach (var client in _clients) *@
+    // {
+        <tr>
+            <td>@clientes</td>
+            @* <td>@client.Name</td> *@
+            @* <td>@client.Surname</td> *@
+        </tr>
+    // }
+    </tbody>
+</table>
+}
+
+@code {
+    private List<ClientDto> _clients = new List<ClientDto>();
+    private string clientes;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            using (Http = new HttpClient())
+            {
+                await Task.Delay(5000); 
+                clientes = await Http.GetStringAsync("/client/2");
+                if (_clients.Any() && !(_clients is null))
+                {
+                    var num = _clients.Count();
+                }
+
+            }
+            // clients = await Http.GetAsync();
+        }
+        catch (HttpRequestException ex)
+        {
+            // Aquí puedes manejar el error si la solicitud falla, o mostrar un mensaje al usuario
+            Console.WriteLine($"Error al obtener los clientes: {ex.Message}");
+        }
+    }
+
+}
+
