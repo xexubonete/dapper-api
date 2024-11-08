@@ -11,8 +11,9 @@ namespace dapper_api.Models
         public ApiDbContext(IConfiguration configuration)
         {
             // _connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+            _connectionString = configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
             // Accede directamente a la variable de entorno configurada en Docker
-            _connectionString = configuration["ConnectionStrings__AZURE_SQL_CONNECTIONSTRING"];
+            // _connectionString = configuration["ConnectionStrings__AZURE_SQL_CONNECTIONSTRING"];
         }
 
         public IDbConnection CreateConnection()

@@ -23,7 +23,18 @@ builder.Services.AddControllers();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddScoped<IApiDbContext, ApiDbContext>();
 builder.Services.AddScoped<IValidator<ClientDTO>, ClientDTOValidator>();
+builder.Services.AddRazorPages();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorApp",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 
@@ -40,5 +51,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseCors();
+
+app.MapRazorPages();
 
 app.Run();
