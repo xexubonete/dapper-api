@@ -47,8 +47,10 @@ else
         {
             using (Http = new HttpClient())
             {
-                await Task.Delay(5000); 
-                clientes = await Http.GetStringAsync("/client/2");
+                // await Task.Delay(5000);
+                Http.DefaultRequestHeaders.ConnectionClose = false;
+                Http.Timeout = TimeSpan.FromSeconds(100); 
+                clientes = await Http.GetStringAsync("/api/Client");
                 if (_clients.Any() && !(_clients is null))
                 {
                     var num = _clients.Count();
