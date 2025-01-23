@@ -134,7 +134,7 @@ Contributions are always welcome. Please read the `CONTRIBUTING.md` file for det
 ## 📫 Contact
 
 If you have any questions or suggestions, don't hesitate to contact:
-- Email: xexubonete@outlook.es
+- Email: xexubonete@gmail.com
 
 ## 📄 License
 
