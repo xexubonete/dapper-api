@@ -1,136 +1,141 @@
+# 🚀 DAPPER-API
 
-# DAPPER-API
+Web API in .NET that implements Automapper, uses Dapper for data access, and follows Clean Code principles. Includes unit tests.
 
-.NET web API that leverage Automapper approach, Dapper for data access, and adhere to the principles of Clean Code. Tests also are included.
+## ✨ Features
 
+- ✨ Dapper implementation for efficient data access
+- 🗺️ AutoMapper for object mapping
+- 🧪 Unit tests included
+- 🏗️ Clean architecture
+- 📝 API documentation with Swagger
 
-## Run Locally
+## 📋 Prerequisites
+
+- .NET 8.0 SDK
+- SQL Server (version 2019 or higher)
+- IDE (Visual Studio 2022 recommended)
+
+## 🛠️ Installation and Local Setup
 
 Clone the project
 
 ```bash
-  git clone https://github.com/xexubonete/dapper-api.git
+git clone https://github.com/xexubonete/dapper-api.git
 ```
 
-Go to the project directory
+Go to project directory
 
 ```bash
-  cd ./dapper-api/dapper-api
+cd ./dapper-api/dapper-api
 ```
 
-Check that you've dotnet installed
+Verify .NET installation
 
 ```bash
-  dotnet --version
+dotnet --version
 ```
 
 Start the server
 
 ```bash
-  dotnet run
+dotnet run
 ```
 
+## 🧪 Testing
 
-## Running Tests
-
-To run tests, run the following command
+Run unit tests
 
 ```bash
-  cd ./dapper-api-test
+cd ./dapper-api-test
+dotnet test
 ```
 
-```bash
-  dotnet run test
-```
+## 📚 API Documentation
 
+### 👥 Client Endpoints
 
-## API Reference
-
-#### GET all clients
-
+#### Get all clients
 ```http
-  GET /api/Client
+GET /api/Client
 ```
 
-#### CREATE client
-
+#### Create client
 ```http
-  POST /api/Client
+POST /api/Client
 ```
-`{  "id": 0,    "name": "string",    "surname": "string"    }`
+
+**Request body:**
+```json
+{
+    "id": 0,
+    "name": "string",
+    "surname": "string"
+}
+```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `  id   ` | ` int  ` |  **Required** Identifier   |
-| `  Name ` | `string` |  **Nullable** Client name  |
-| `Surname` | `string` |  **Nullable** Client surname|
+| `id`      | `int`    | **Required** Identifier    |
+| `name`    | `string` | **Optional** First name    |
+| `surname` | `string` | **Optional** Last name     |
 
-
-#### PUT an existent client
-
+#### Update existing client
 ```http
-  PUT /api/Client
-```
-`{  "id": 0,    "name": "string",    "surname": "string"    }`
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `  id   ` | ` int  ` |  **Required** Identifier   |
-| `  Name ` | `string` |  **Nullable** Client name  |
-| `Surname` | `string` |  **Nullable** Client surname|
-
-
-#### GET client by id
-
-```http
-  GET /api/Client/${id}
+PUT /api/Client
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of client to search |
-
-#### DELETE client by id
-
+#### Get client by ID
 ```http
-  DELETE /api/Client/${id}
+GET /api/Client/${id}
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of client to search |
+#### Delete client
+```http
+DELETE /api/Client/${id}
+```
 
-## Authors
+## 📁 Project Structure
 
-- [Author Github](https://www.github.com/xexubonete)
-- [Author LinkedIn](https://www.linkedin.com/in/jesus-bonete-sanchez/)
+```
+dapper-api/
+├── src/
+│   ├── API/
+│   ├── Core/
+│   ├── Infrastructure/
+│   └── Tests/
+├── docs/
+└── README.md
+```
 
+## 💻 Technologies Used
 
-## Feedback
+- .NET 8.0
+- Dapper
+- AutoMapper
+- xUnit
+- Swagger/OpenAPI
 
-If you have any feedback, please reach out to us at xexubonete@outlook.es
+## 🔗 Related Projects
 
+- [crud-api](https://github.com/xexubonete/crud-api)
+- [mediator-api](https://github.com/xexubonete/mediator-api)
+- [pilot-api](https://github.com/xexubonete/pilot-api)
 
-## Tech Stack
+## 👨‍💻 Author
 
-**Server:** C#, .NET 8.0
+- [GitHub](https://www.github.com/xexubonete)
+- [LinkedIn](https://www.linkedin.com/in/jesus-bonete-sanchez/)
 
+## 🤝 Contributing
 
-## Related
+Contributions are always welcome. Please read the `CONTRIBUTING.md` file for details on our code of conduct and the process for submitting pull requests.
 
-Here are some related projects
+## 📫 Contact
 
-[crud-api](https://github.com/xexubonete/crud-api)  
-[mediator-api](https://github.com/xexubonete/mediator-api)  
-[pilot-api](https://github.com/xexubonete/pilot-api)
+If you have any questions or suggestions, don't hesitate to contact:
+- Email: xexubonete@outlook.es
 
+## 📄 License
 
-## Environment Variables
-
-To run this project, you will not need any environment variables
-
-
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+This project is under the [MIT](https://choosealicense.com/licenses/mit/) license
