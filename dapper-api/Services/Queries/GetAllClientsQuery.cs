@@ -21,7 +21,7 @@ namespace dapper_api.Services.Queries
                 {
                     using var connection = _context.CreateConnection();
 
-                    string query = "SELECT * FROM [Client]";
+                    string query = "SELECT * FROM Clients";
 
                     return await connection.QueryAsync<Client>(query);
 

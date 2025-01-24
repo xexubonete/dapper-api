@@ -28,9 +28,9 @@ namespace dapper_api.Services.Commands
                 {
                     using var connection = _context.CreateConnection();
 
-                    string command = $"DELETE FROM [Client] WHERE [Id] = {request.Id}";
+                    var sql = "DELETE FROM Clients WHERE Id = @Id";
 
-                    await connection.ExecuteAsync(command, new { request.Id });
+                    await connection.ExecuteAsync(sql, new { request.Id });
 
                 }
                 catch (Exception ex)

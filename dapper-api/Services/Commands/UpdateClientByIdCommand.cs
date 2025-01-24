@@ -40,9 +40,9 @@ namespace dapper_api.Services.Commands
 
                     validator.ValidateAndThrow(client);
 
-                    string command = $"UPDATE [Client] SET [Name]= \'{ request.Name }\', [Surname]= \'{ request.Surname }\' WHERE [Id] = { request.Id }";
+                    var sql = "UPDATE Clients SET Name = @Name, Surname = @Surname WHERE Id = @Id";
 
-                    await connection.ExecuteAsync(command, new { request.Id, request.Name, request.Surname });
+                    await connection.ExecuteAsync(sql, new { request.Id, request.Name, request.Surname });
 
                 }
                 catch (Exception ex)

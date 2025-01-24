@@ -29,10 +29,10 @@ namespace dapper_api.Services.Queries
                 {
                     using var connection = _context.CreateConnection();
 
-                    string query = $"SELECT * FROM [Client] WHERE [Id] = \'{request.Id}\' ";
+                    var sql = "SELECT * FROM Clients WHERE Id = @Id";
 
 #pragma warning disable CS8603 // Posible tipo de valor devuelto de referencia nulo
-                    return (await connection.QueryAsync<ClientDTO>(query, new { request.Id })).FirstOrDefault();
+                    return (await connection.QueryAsync<ClientDTO>(sql, new { request.Id })).FirstOrDefault();
 #pragma warning restore CS8603 // Posible tipo de valor devuelto de referencia nulo
 
                 }

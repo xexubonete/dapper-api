@@ -41,10 +41,9 @@ namespace dapper_api.Services.Commands
 
                     validator.ValidateAndThrow(client);
 
-                    string command = $"INSERT INTO [Client] ([Name], [Surname]) VALUES ( \'{client.Name}\', \'{client.Surname}\');";
+                    var sql = "INSERT INTO Clients (Name, Surname) VALUES (@Name, @Surname)";
 
-                    await connection.ExecuteAsync(command, new { request.Id, request.Name, request.Surname });
-
+                    await connection.ExecuteAsync(sql, new { request.Name, request.Surname });
                 }
                 catch (Exception ex)
                 {
