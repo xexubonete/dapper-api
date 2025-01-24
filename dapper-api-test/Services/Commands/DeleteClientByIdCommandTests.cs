@@ -16,7 +16,7 @@ namespace dapper_api_test.Services.Commands
             db = new InMemoryDatabase();
             deleteClientByIdCommand = new DeleteClientByIdCommand(id);
             _context = new Mock<IApiDbContext>();
-            db.CreateDatabaseTest(db);
+            InMemoryDatabase.CreateDatabaseTest(db);
             _context.Setup(x => x.CreateConnection()).Returns(db.OpenConnection());
         }
 

@@ -15,7 +15,7 @@ namespace dapper_api_test.Services.Queries
             db = new InMemoryDatabase();
             getAllClientsQuery = new GetAllClientsQuery();
             _context = new Mock<IApiDbContext>();
-            db.CreateDatabaseTest(db);
+            InMemoryDatabase.CreateDatabaseTest(db);
             _context.Setup(x => x.CreateConnection()).Returns(db.OpenConnection());
         }
 

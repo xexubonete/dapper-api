@@ -1,39 +1,48 @@
-﻿using dapper_api.Entities;
-using ServiceStack.OrmLite;
-using ServiceStack.OrmLite.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using System.Data;
+using Dapper;
 
 namespace dapper_api_test
 {
-    public class InMemoryDatabase
+    public class InMemoryDatabase : IDisposable
     {
-        private readonly OrmLiteConnectionFactory dbFactory = new OrmLiteConnectionFactory(":memory:", SqliteOrmLiteDialectProvider.Instance, true);
+        private readonly SqliteConnection _connection;
 
-        public IDbConnection OpenConnection() => this.dbFactory.OpenDbConnection();
-
-        public void Insert<T>(IEnumerable<T> items)
+        public InMemoryDatabase()
         {
-            using (var db = this.OpenConnection())
-            {
-                db.CreateTableIfNotExists<T>();
-                foreach (var item in items)
-                {
-                    db.Insert(item);
-                }
-            }
+            _connection = new SqliteConnection("Data Source=:memory:");
+            _connection.Open();
+            CreateTable();
         }
 
-        public void CreateDatabaseTest(InMemoryDatabase db)
+        private void CreateTable()
         {
-            var client = new Client
-                {
-                    Id = 1,
-                    Name = "Test",
-                    Surname = "Test"
-                };
+            var sql = @"
+                CREATE TABLE Clients (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Name TEXT NOT NULL,
+                    Surname TEXT NOT NULL
+                )";
+            
+            _connection.Execute(sql);
+        }
 
-            IEnumerable<Client> clients = new List<Client> { client };
-            db.Insert(clients);
+        public IDbConnection OpenConnection()
+        {
+            return _connection;
+        }
+
+        public static void CreateDatabaseTest(InMemoryDatabase db)
+        {
+            var sql = "INSERT INTO Clients (Name, Surname) VALUES (@Name, @Surname)";
+            var client = new { Name = "Test", Surname = "Test" };
+            
+            db.OpenConnection().Execute(sql, client);
+        }
+
+        public void Dispose()
+        {
+            _connection?.Dispose();
         }
     }
 }
