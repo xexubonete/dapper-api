@@ -24,6 +24,11 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
 builder.Services.AddScoped<IApiDbContext, ApiDbContext>();
 builder.Services.AddScoped<IValidator<ClientDTO>, ClientDTOValidator>();
 builder.Services.AddRazorPages();
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.HttpsPort = 5001;
+});
+
 
 builder.Services.AddCors(options =>
 {
@@ -42,7 +47,6 @@ var app = builder.Build();
 // app.UseSwagger();
 // app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
 
 app.UseRouting();
 
@@ -50,7 +54,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("AllowBlazorClient");
+// Debe ser (para que coincida con la política definida arriba)
+app.UseCors("AllowBlazorApp");
 
 app.MapRazorPages();
 

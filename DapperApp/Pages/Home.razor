@@ -4,67 +4,49 @@
 @inject HttpClient Http
 
 
-<PageTitle>Home</PageTitle>
 
 <h1>Client</h1>
 
 <p>This component demonstrates fetching data from the server.</p> 
 
-@if (clients == "// {\n// }")
+@if (!_clients.Any())
 {
-<p><em>Loading...</em></p>
+    <p><em>Cargando...</em></p>
 }
 else
 {
 <table class="table">
     <thead>
     <tr>
-        <th></th>
-        <th>Temp. (C)</th>
-        <th>Temp. (F)</th>
-        <th>Summary</th>
+        <th>Name</th>
+        <th>Surname</th>
     </tr>
     </thead>
     <tbody>
-    @* @foreach (var client in _clients) *@
-    // {
+    @foreach (var client in _clients)
+    {
         <tr>
-            <td>@clients</td>
-            @* <td>@client.Name</td> *@
-            @* <td>@client.Surname</td> *@
+            <td>@client.Name</td>
+            <td>@client.Surname</td>
         </tr>
-    // }
+    }
     </tbody>
 </table>
 }
 
 @code {
     private List<ClientDto> _clients = new List<ClientDto>();
-    private string? clients;
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            using (Http = new HttpClient())
-            {
-                // await Task.Delay(5000);
-                Http.DefaultRequestHeaders.ConnectionClose = false;
-                Http.Timeout = TimeSpan.FromSeconds(100); 
-                clients = await Http.GetStringAsync("/api/Client");
-                if (_clients.Any() && !(_clients is null))
-                {
-                    var num = _clients.Count();
-                }
-
-            }
-            // clients = await Http.GetAsync();
+            _clients = await Http.GetFromJsonAsync<List<ClientDto>>("/api/Client") ?? new List<ClientDto>();
         }
         catch (HttpRequestException ex)
         {
-            // Aquí puedes manejar el error si la solicitud falla, o mostrar un mensaje al usuario
             Console.WriteLine($"Error al obtener los clientes: {ex.Message}");
+            _clients = new List<ClientDto>();
         }
     }
-
 }
 
