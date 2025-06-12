@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dapper-api", "dapper-api\dapper-api.csproj", "{F397560E-3958-4023-8292-417071B44440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "src", "src\dapper-api.csproj", "{F397560E-3958-4023-8292-417071B44440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dapper-api-test", "dapper-api-test\dapper-api-test.csproj", "{4CE58FF7-7561-4803-A6A1-6D5142B467A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\dapper-api-test.csproj", "{4CE58FF7-7561-4803-A6A1-6D5142B467A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperApp", "DapperApp\DapperApp.csproj", "{30808A17-C76B-4363-B534-CF10E708D6BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.App", "Portal.App\Portal.App.csproj", "{30808A17-C76B-4363-B534-CF10E708D6BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7CA24AAB-C0FC-4DF0-8EDB-A5C17F067C1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C7C40DDD-503B-4B7B-B22E-9559A7ACB1A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,5 +37,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26D995BD-A61E-41E4-AB03-4876FB7EA09A}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F397560E-3958-4023-8292-417071B44440} = {7CA24AAB-C0FC-4DF0-8EDB-A5C17F067C1F}
+		{4CE58FF7-7561-4803-A6A1-6D5142B467A8} = {C7C40DDD-503B-4B7B-B22E-9559A7ACB1A6}
 	EndGlobalSection
 EndGlobal
