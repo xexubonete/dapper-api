@@ -20,15 +20,24 @@
     <PackageReference Include="NUnit" Version="4.0.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
-    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\dapper-api.csproj" />
+    <ProjectReference Include="..\src\Dapper.API\Dapper.API.csproj" />
+    <ProjectReference Include="..\src\Dapper.Application\Dapper.Application.csproj" />
+    <ProjectReference Include="..\src\Dapper.Domain\Dapper.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="API\" />
+    <Folder Include="Application\" />
+    <Folder Include="Domain\" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
 </Project>
