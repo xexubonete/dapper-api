@@ -1,7 +1,6 @@
 ﻿using Dapper.Application.Services.Commands;
 using Dapper.Application.Services.Queries;
 using Dapper.Domain.Dtos;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dapper.Api.Controllers

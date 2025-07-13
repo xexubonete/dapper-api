@@ -20,7 +20,9 @@ if (!builder.Environment.IsDevelopment())
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(cfg => 
+    cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
 builder.Services.AddScoped<IApiDbContext, ApiDbContext>();
 builder.Services.AddScoped<IValidator<ClientDto>, ClientDtoValidator>();
 builder.Services.AddRazorPages();

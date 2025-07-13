@@ -1,0 +1,51 @@
+﻿@page "/"
+@using global::Dapper.Web.Dto
+@inject HttpClient Http
+
+
+
+<h1>Client</h1>
+
+<p>This component demonstrates fetching data from the server.</p> 
+
+@if (!_clients.Any())
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var client in _clients)
+    {
+        <tr>
+            <td>@client.Name</td>
+            <td>@client.Surname</td>
+        </tr>
+    }
+    </tbody>
+</table>
+}
+
+@code {
+    private List<ClientDto> _clients = new List<ClientDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _clients = await Http.GetFromJsonAsync<List<ClientDto>>("/api/Client") ?? new List<ClientDto>();
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"Error al obtener los clientes: {ex.Message}");
+            _clients = new List<ClientDto>();
+        }
+    }
+}
+
