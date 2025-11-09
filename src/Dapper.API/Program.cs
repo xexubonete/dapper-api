@@ -62,6 +62,4 @@ app.MapControllers();
 
 app.MapRazorPages();
 
-app.Urls.Add("http://localhost:5000/");
-
 app.Run();
