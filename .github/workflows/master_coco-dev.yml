@@ -23,6 +23,15 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Install GitVersion
+        uses: GitTools/actions/gitversion/setup@v3
+        with:
+          versionSpec: '5.x'
+
+      - name: Run GitVersion
+        id: gitversion
+        uses: GitTools/actions/gitversion/execute@v3
+        
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
@@ -37,6 +46,14 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
+          
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.gitversion.outputs.MajorMinorPatch }}
+          name: "Release ${{ steps.gitversion.outputs.FullSemVer }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     runs-on: windows-latest
