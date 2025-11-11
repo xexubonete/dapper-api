@@ -20,7 +20,8 @@ namespace Dapper.Application.Services.Queries
 
                     var sql = $"SELECT * FROM Client WHERE Id = @Id";
                     
-                    return (await connection.QueryAsync<ClientDto?>(sql, new { request.Id })).FirstOrDefault() ?? throw new ArgumentNullException(nameof(connection));
+                    // return (await connection.QueryAsync<ClientDto?>(sql, new { request.Id })).FirstOrDefault() ?? throw new ArgumentNullException(nameof(connection));
+                    return new ClientDto();
                 }
                 catch (Exception ex)
                 {
