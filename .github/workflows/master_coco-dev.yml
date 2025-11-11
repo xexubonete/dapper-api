@@ -55,7 +55,7 @@ jobs:
           tag_name: v${{ steps.gitversion.outputs.MajorMinorPatch }}
           name: "Release ${{ steps.gitversion.outputs.FullSemVer }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
   deploy:
     runs-on: windows-latest
