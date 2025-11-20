@@ -1,4 +1,5 @@
 ﻿using Dapper.Application.Services.Queries;
+using Dapper.Domain.Dtos;
 using Dapper.Domain.Interfaces;
 using Moq;
 
@@ -25,8 +26,7 @@ namespace Dapper.Application.Tests.Services.Queries
             var request = new GetClientByIdQuery.GetClientByIdQueryHandler(_context.Object);
             var result = await request.Handle(_getClientByIdQuery, CancellationToken.None);
 
-            // Assert.That(result is not null && id == result.Id);
-            Assert.True(true); // xD
+            Assert.IsType<ClientDto>(result);
         }
     }
 }
