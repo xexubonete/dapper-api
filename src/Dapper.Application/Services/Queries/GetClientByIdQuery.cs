@@ -6,7 +6,7 @@ namespace Dapper.Application.Services.Queries
 {
     public class GetClientByIdQuery(int id) : IRequest<ClientDto?>
     {
-        private readonly int Id = id;
+        private readonly int _id = id;
 
         public class GetClientByIdQueryHandler(IApiDbContext context) : IRequestHandler<GetClientByIdQuery, ClientDto?>
         {

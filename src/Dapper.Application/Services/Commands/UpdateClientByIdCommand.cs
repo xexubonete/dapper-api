@@ -15,7 +15,7 @@ namespace Dapper.Application.Services.Commands
         public class UpdateClientByIdCommandHandler : IRequestHandler<UpdateClientByIdCommand>
         {
             private readonly IApiDbContext _context;
-            private readonly ClientDtoValidator validator = new ClientDtoValidator();
+            private readonly ClientDtoValidator _validator = new ClientDtoValidator();
             public UpdateClientByIdCommandHandler(IApiDbContext context)
             {
                 _context = context;
@@ -33,7 +33,7 @@ namespace Dapper.Application.Services.Commands
                         Surname = request.Surname,
                     };
 
-                    validator.ValidateAndThrow(client);
+                    _validator.ValidateAndThrow(client);
 
                     var sql = "UPDATE Clients SET Name = @Name, Surname = @Surname WHERE Id = @Id";
 

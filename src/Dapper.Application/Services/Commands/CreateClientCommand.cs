@@ -15,7 +15,7 @@ namespace Dapper.Application.Services.Commands
         public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand>
         {
             private readonly IApiDbContext _context;
-            private ClientDtoValidator validator = new ClientDtoValidator();
+            private ClientDtoValidator _validator = new ClientDtoValidator();
 
             public CreateClientCommandHandler(IApiDbContext context)
             {
@@ -34,7 +34,7 @@ namespace Dapper.Application.Services.Commands
                         Surname = request.Surname,
                     };
 
-                    validator.ValidateAndThrow(client);
+                    _validator.ValidateAndThrow(client);
 
                     var sql = "INSERT INTO Clients (Name, Surname) VALUES (@Name, @Surname)";
 
