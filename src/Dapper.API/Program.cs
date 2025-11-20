@@ -1,7 +1,6 @@
 using Dapper.Domain.Interfaces;
 using Dapper.Infrastructure.Models;
 using FluentValidation;
-using System.Reflection;
 using Dapper.Domain.Dtos;
 using Dapper.Application.Validators;
 
@@ -57,8 +56,6 @@ app.UseCors("AllowBlazorApp");
 app.UseAuthorization();
 
 app.MapControllers();
-
-// Debe ser (para que coincida con la política definida arriba)
 
 app.MapRazorPages();
 
